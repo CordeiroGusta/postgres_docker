@@ -1,0 +1,10 @@
+.git
+.gitignore
+
+.env
+.env.*
+
+README.md
+.vscode/
+
+postgres_data/

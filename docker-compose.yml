@@ -1,0 +1,31 @@
+services:
+  db_test:
+    image: postgres:17-alpine
+    container_name: ${DB_NAME}
+
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+
+    ports:
+      - "127.0.0.1:5432:5432"
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${DB_NAME} -U ${DB_USER} -q"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+    volumes:
+      - 'postgres_data:/var/lib/postgresql/data'
+
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+
+volumes:
+  postgres_data:
